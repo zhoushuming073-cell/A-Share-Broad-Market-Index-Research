@@ -1,0 +1,34 @@
+{
+  "source_commit": "fe47059a0f7fe261d306763bfbe981fa28b0357a",
+  "input_sqlite_sha256": "4861d92b99f519b1cad3fb42edcfd3aa1caaf5680b30ccec2566b51a3e05e6ec",
+  "python": "3.13.7",
+  "commands": [
+    "run.py",
+    "verify.py",
+    "build_manuscript.py"
+  ],
+  "checks": {
+    "data/input_closes.csv": "byte-identical",
+    "research_report.md": "byte-identical",
+    "results/e1_all_entries.csv": "byte-identical",
+    "results/e1_holding_paths.npz": "all array values identical",
+    "results/e1_start_period_contrast.csv": "byte-identical",
+    "results/e2_direction_selection.csv": "byte-identical",
+    "results/e2_e4_daily.csv.gz": "byte-identical",
+    "results/e2_e4_statistics.csv": "byte-identical",
+    "results/e2_fresh_test_paths.csv": "byte-identical",
+    "results/e2_hindsight_comparison.csv": "byte-identical",
+    "results/e2_paired_tests.csv": "byte-identical",
+    "results/verification.json": "byte-identical"
+  },
+  "ledger": {
+    "status": "passed",
+    "entry_windows": 2632,
+    "holding_sessions": 252,
+    "other_paths": 104,
+    "selection_pairs": 3,
+    "other_path_days": 228194,
+    "fresh_test_path_days": 2718,
+    "gross_and_cost_checks": true
+  }
+}

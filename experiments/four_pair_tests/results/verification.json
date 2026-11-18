@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "entry_windows": 2632,
+  "holding_sessions": 252,
+  "other_paths": 104,
+  "selection_pairs": 3,
+  "other_path_days": 228194,
+  "fresh_test_path_days": 2718,
+  "gross_and_cost_checks": true
+}
