@@ -1,35 +1,40 @@
-# A股宽基指数投资价值研究
+# A股宽基指数的内部收益抵消与投资价值研究
 
-本仓库公开项目的行情快照、数据库、历史成分股资料、实验代码、逐日回放、成本情景、图表、研究报告和运行日志。当前数据截至 **2026-11-17**。研究使用的多数指数序列是价格指数；配对交易收益是模拟结果。
+**[阅读主研究报告](reports/preliminary_report.md)** · [实验完成情况](reports/experiment_status.md) · [数据缺口](reports/data_gaps.md) · [复现说明](reports/reproduction.md)
 
-## 从哪里开始
+当一条宽基指数收盘只涨跌一点时，它的成分股究竟经历了多大的涨跌？本研究用前一交易日的成分权重衡量每只股票的收益贡献，再考察这些贡献在行业内部和行业之间抵消了多少。投资价值由长期收益、风险和组合表现共同检验。
 
-- [完整配对交易研究报告](reports/pair_trading_full_research.md)
-- [交易工具与成本报告](reports/pair_trading_implementation.md)
-- [上证指数／沪深300复现报告](reports/sse_csi300_replication.pdf)
-- [冠军配对完整历史曲线](outputs/figures/pair_champion_full_history.png)与[逐日回放](outputs/tables/pair_champion_full_history.csv)
-- [数据字典与来源](data/README.md)、[数据缺口](reports/data_gaps.md)、[研究执行协议](研究执行协议_v1.md)
+研究对象为国证1000、中证A100、上证100和沪深300。上证综指为主要基准，中证全指为辅助基准。价格指数共同覆盖2015-01-05至2026-11-17，共2,884个收盘点。目前按历史权重核验的内部抵消覆盖一个交易日。
 
-配对实验涵盖库中六条宽基指数、15个无序配对、30个多空方向和1,560种策略配置。2024-07-02至2026-11-17的测试期收益冠军是做多上证指数、做空上证100，使用衰减系数0.94的EWMA对冲比例，每月更新。它是**测试期事后冠军**。按照验证期规则提前锁定的策略是做多沪深300、做空上证100。请将两者的表现和[逐年重新选对结果](outputs/tables/walk_forward_results.csv)一起阅读。
+## 指数涨幅背后的个股贡献
 
-## 本地复算
+2026-11-02，中证A100成分股带来的正贡献为131.96个基点，负贡献为−65.03个基点。两者合计使指数上涨约66.93个基点，按贡献绝对值计算，当日有 **66.02%** 的涨跌相互抵消。国证1000同日可匹配的996只股票中，行业内部抵消占总抵消的 **94.19%**。这两组数分别回答抵消了多少、抵消发生在哪里。它们的历史稳定性仍待连续成分权重和行业数据验证。[证券级贡献](outputs/tables/e4_snapshot_contributions.csv) · [行业分解](outputs/tables/e5_decomposition.csv)
 
-建议使用 Python 3.13。安装[依赖版本](requirements.txt)后，在仓库根目录运行
+## 主线实验与阅读顺序
 
-```powershell
+| 研究问题 | 实验与现有证据 | 查看结果 |
+|---|---|---|
+| 指数内部有多少涨跌相互抵消？主要发生在哪里？ | E4、E5。四条宽基有单日权重归因，国证1000另有当期行业分解。 | [抵消率与复制误差](outputs/tables/e4_snapshot_metrics.csv) · [行业贡献](outputs/tables/e5_industry_contributions.csv) |
+| 四条宽基承担哪些市场与风格风险？ | E1—E3。比较两个市场基准、行情状态及规模和价值等因子。 | [市场暴露](outputs/tables/e1_regression.csv) · [状态日历](outputs/tables/e2_states.csv) · [因子暴露](outputs/tables/e3_coefficients.csv) |
+| 震荡中的抵消是否源于行业轮动？能否帮助预测风险？ | E6、E7。已有计算入口，连续行业贡献与日度抵消面板待补。 | [所需历史字段与覆盖范围](reports/data_gaps.md) |
+| 同时持有多条宽基能否改善风险收益？ | E8。约束最小方差组合在样本外较月度等权降低波动，夏普改善仍有较大不确定性。 | [组合绩效](outputs/tables/e8_performance.csv) · [区块抽样区间](outputs/tables/e8_bootstrap_differences.csv) |
+
+## 下一步研究
+
+优先取得四条宽基在历史各期实际生效的成分、权重，以及同期个股收益和行业归属。先在普通交易日、调样日和公司行为日逐日对照官方指数收益，记录缺失权重与复制误差，再比较不同行情下行业内外抵消的占比。沪深300已有23期名单的等权分化观察，可用于交叉检查。[数据盘点](reports/data_inventory.md) · [成分股覆盖说明](data/constituent_coverage.md) · [研究执行协议](研究执行协议_v1.md)
+
+## 数据与复现
+
+原始行情、历史成分股文件和 SQLite 库位于 [data](data/)。输入快照、实验表、图和日志均已归档。从已有权重快照复算 E4 和 E5，可在仓库根目录运行以下命令。建议使用 Python 3.13。
+
+```shell
 python -m pip install -r requirements.txt
-python -m unittest discover -s tests
-python scripts/run_pair_search.py
-python scripts/plot_pair_champion_full_history.py
-python scripts/replicate_sse_csi300.py
+python scripts/run_e4_offsetting.py
+python scripts/run_e5_decomposition.py
 ```
 
-`run_pair_search.py`读取已提交的 `data/a_share_indices.sqlite`，重算全部配对、成本、年度滚动及报告。该脚本在生成交易工具报告时优先读取 `outputs/inputs/pair_instruments/` 的已存行情。图表与结果写入 `outputs/`，报告写入 `reports/`。复现PDF需要 Playwright 和可用的 Edge 浏览器。核心配对回放仅依赖库内收盘数据，无须再次下载。
+其余主线实验的运行顺序、输入字段与预热期见[完整复现说明](reports/reproduction.md)。[数据来源](data/README.md) · [运行日志](outputs/logs/) · [文件校验清单](outputs/logs/publication_manifest.csv)
 
-原始行情CSV位于 `data/raw_index/`，历史成分股抓取材料位于 `data/raw_constituents/`。归档 `outputs/pair_paths/A_B.npz` 保留所有策略的逐日路径，其中 `ids` 给出配置顺序，`date` 为收益日期，`w` 与 `v` 是两腿权重，`ret` 为归一到1倍总敞口的日毛收益，`raw_ret` 为原始敞口口径，`traded` 为每1元初始资本的日成交额。复利净值为 `(1+ret)` 连乘。
+## 专题附录
 
-主要导出表包括 [全组合结果](outputs/tables/all_pair_results.csv)、[三份排行榜](outputs/tables/top_return_pairs.csv)、[成本敏感性](outputs/tables/cost_sensitivity.csv)、[逐年候选记录](outputs/tables/walk_forward_trials.csv)、[工具回放](outputs/tables/pair_instrument_returns.csv)。每个文件的 SHA-256 见 [归档清单](outputs/logs/publication_manifest.csv)，公开前复算记录见 [发布日志](outputs/logs/publication_replay.md)。
-
-## 数据与解释边界
-
-指数行情由 AKShare 调用东方财富接口抓取，采集时间、批次和原始快照校验值记录在数据库 `ingest_batch`。ETF与IF行情的缓存也已提交。基于指数价格的理论净值、成本情景净值以及ETF/期货工具回放有不同口径，详情见各报告。上证100空头的历史工具与券源尚未得到可核实的完整数据。
+指数间多空配对实验单独归档，包含参数搜索、逐日净值、成本和工具回放。[配对交易附录与复现入口](reports/pair_experiments.md)
