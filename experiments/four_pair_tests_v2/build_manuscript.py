@@ -134,6 +134,25 @@ cross=e4[(e4.b=="000132")&(e4.method=="static")].iloc[0]
 eq=e4[(e4.b=="000132")&(e4.method=="one")].iloc[0]
 add(f"跨指数等额账户的共同贡献为零，全部毛收益{pct(eq.gross)}来自相对变化，成本后净收益{pct(eq.net)}，实现Beta为{num(eq.beta,3)}。跨指数静态OLS在毛账户中得到共同贡献{num(100*cross.gross_common)}、相对贡献{num(100*cross.gross_relative)}个百分点，合成毛收益{pct(cross.gross)}。正的共同方向敞口抵消了部分相对亏损。")
 figure("e4_curves","沪深300多头分别对冲同一标的和上证100的测试期净值")
+heading("收益较高的模拟对冲策略：净值曲线与建仓方法")
+featured=read("selected_strategy_details")
+featured_test=featured[featured.period.eq("test")].set_index("method")
+candidate_test=e3[e3.period.eq("test")]
+add(f"在实验三的{len(candidate_test)}个跨指数设定中，按测试期累计净收益从高到低排列，只有{int(candidate_test.net.gt(0).sum())}个设定盈利。下表列出测试期前两名，并加入按训练期累计净收益排第一的策略。每行的入选时期都已标明。测试期排名是看完期末净值后的历史描述；训练期第一名随后两个阶段的表现则可以检验其优势是否延续。三组均为价格指数模拟账户。")
+stage_net=featured.pivot(index="label",columns="period",values="net")
+table("三条入选曲线的阶段收益与回撤（阶段收益均为扣费后累计值）",["多头／空头及方法","入选依据","训练期","验证期","测试期","测试期最大回撤"],[
+    [r.label,("测试期" if r.selected_period=="test" else "训练期")+f"第{r.rank}名",*[pct(stage_net.loc[r.label,k]) for k in periods],pct(r.mdd)] for r in featured_test.itertuples()])
+figure("selected_history","三条策略的完整历史成本后净值，竖线划分训练、验证与测试期")
+add("图7从2015-01-05的1元本金开始，将三个阶段已经扣费的日收益依日期复利连接。阶段末按原账本平仓，下一阶段从空仓按同一规则重建，边界保留两次实际交易费用。图8单独展示2024-12-31收盘重新建仓至2026-11-17的测试账户，三幅图采用相同纵轴。")
+figure("selected_test","逐策略对照测试期毛净值与成本后净值（每个账户重新从1元开始）")
+st=featured_test.loc["static"];eqw=featured_test.loc["one"];ew=featured_test.loc["ewma"]
+add(f"**多上证综指（000001）、空沪深300（000300）｜静态OLS。** 用多头日收益对空头日收益做带截距回归。训练期展示段用最初120个收益日拟合；验证期和测试期使用截至2017-12-28的训练样本固定斜率。每做多1元配空{num(st.initial_h,4)}元。按一倍总敞口折算，测试期初多头{pct(st.initial_long)}、空头{pct(-st.initial_short)}。以后每日恢复这两个目标权重，直至期末平仓。")
+add(f"**多上证综指（000001）、空沪深300（000300）｜等额。** 空头和多头的目标名义金额始终相等，h=1；每天收盘按扣除当次交易费后的可配置净资产各配50%。两腿相同，便于与静态OLS逐日对照。测试期两者净收益仅差{num(100*(st.net-eqw.net))}个百分点，图7中的两条曲线也多次重叠。")
+add(f"**多中证100（000903）、空上证综指（000001）｜月度EWMA。** 空头比率取两腿日收益的指数加权中心协方差除以空头日收益的加权方差。衰减系数0.97，至少60个历史收益，递推均值。每月首个收益日启用新比率，以前两交易日收盘前已观察到的数据估计，在前一交易日收盘执行；月内固定比率，每日恢复对应权重。测试首笔按截至{ew.signal_cutoff}的数据估得h={num(ew.initial_h,4)}，初始多头{pct(ew.initial_long)}、空头{pct(-ew.initial_short)}。测试期平均h为{num(ew.mean_h,4)}。")
+add("三条策略均按实际成交金额收取单边5个基点，按每日真实空头名义金额收取年率2%的借券费，按实际自然日数除以365，现金利率为零。训练期前121个收益日共同持有现金，首笔实际成交在2015-07-03收盘。测试期包括初始建仓和期末清仓。")
+table("测试期成本、风险与收益（费用占期初本金）",["方法","毛收益","交易费","借券费","净收益","净年化","净波动","毛Beta"],[
+    [methods[m],*[pct(r[c]) for c in ("gross","fee","borrow","net","annual","vol")],num(r.beta,3)] for m,r in featured_test.iterrows()])
+add(f"静态OLS和等额法的测试期毛收益分别为{pct(st.gross)}和{pct(eqw.gross)}；两者借券费用均明显高于交易费用。月度EWMA在训练期取得{pct(stage_net.loc[ew.label,'train'])}净收益，验证期和测试期均亏损。逐日净值、比率和权重可在 results/selected_strategy_curves.csv 回查，逐策略逐阶段的参数和统计见 results/selected_strategy_details.csv。")
 heading("综合讨论")
 add("实验一表明，选择起点与是否允许权重漂移会同时改变尾部亏损、交易量和盈利频数。实验二控制交易规则后，历史所选方向可以继续少亏，但盈利仍取决于相对变化能否覆盖两腿成本。实验三对协方差的响应有助于控制部分波动；交易方向错误时，提高风险估计频率并不能稳定修复净收益。实验四进一步说明，账面上的两条名义腿是否形成真实的两个头寸，直接决定投资者实际承担的费用。")
 heading("研究局限")
