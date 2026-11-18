@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "entry_dates": 2632,
+  "entry_rules": 2,
+  "holding_sessions": 252,
+  "daily_rows": 289598,
+  "account_paths": 298,
+  "distinct_signal_estimates_checked": 62642,
+  "independent_HAC_checks": 9,
+  "raw_prices_and_XSHG_calendar": "matched"
+}

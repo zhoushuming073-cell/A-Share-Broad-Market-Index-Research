@@ -1,0 +1,5 @@
+﻿provider,index_code,index_name,publisher,return_type
+eastmoney,000001,上证综合指数,SSE,price
+eastmoney,000132,上证100,SSE/CSI,price
+eastmoney,000300,沪深300,CSI,price
+eastmoney,000903,中证A100,CSI,price

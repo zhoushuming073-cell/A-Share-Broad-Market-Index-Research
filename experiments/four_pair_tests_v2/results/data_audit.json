@@ -1,0 +1,15 @@
+{
+  "closes": 2884,
+  "symbols": [
+    "000001",
+    "000132",
+    "000300",
+    "000903"
+  ],
+  "calendar": "XSHG",
+  "calendar_version": "4.13.2",
+  "missing": 0,
+  "duplicates": 0,
+  "raw_files_matched": 4,
+  "max_return_error": 0.0
+}
