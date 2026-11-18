@@ -1,0 +1,32 @@
+{
+  "integrity": "ok",
+  "foreign_key_errors": 0,
+  "nonpositive_ohlc": 0,
+  "invalid_ohlc": 0,
+  "duplicate_index_days": 0,
+  "duplicate_members": 0,
+  "invalid_security_code": 0,
+  "nonpositive_snapshot_weights": 0,
+  "stored_vs_recomputed_return_max_delta": 0.0,
+  "common_price_days": 2884,
+  "common_returns": 2883,
+  "source_checksum_failures": 1,
+  "sse_membership_row_reconciliation": {
+    "workbook_rows": 2238,
+    "database_rows": 2238,
+    "workbook_only": 0,
+    "database_only": 0
+  },
+  "database_sha256": "4861d92b99f519b1cad3fb42edcfd3aa1caaf5680b30ccec2566b51a3e05e6ec",
+  "dependencies": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.3",
+    "statsmodels": "0.15.0",
+    "openpyxl": "3.1.5",
+    "requests": "2.32.4"
+  },
+  "seed": 20261118,
+  "unreferenced_raw_files": []
+}

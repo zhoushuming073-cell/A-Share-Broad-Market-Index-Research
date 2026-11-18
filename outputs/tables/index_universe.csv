@@ -1,0 +1,7 @@
+﻿code,name,category,provider,start,end,valid_days,missing_rate,in_main,exclusion
+000001,上证综合指数,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,
+000132,上证100,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,
+000300,沪深300,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,
+000903,中证A100,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,
+000985,中证全指,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,
+399311,国证1000,宽基,eastmoney,2015-01-05,2026-11-17,2884,0,True,

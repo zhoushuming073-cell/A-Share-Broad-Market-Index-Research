@@ -1,0 +1,60 @@
+﻿dataset,index_code,source,start,end,dates,rows,usable_rows,status,weight_pct,requested_date
+index_price,000001,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+index_price,000132,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+index_price,000300,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+index_price,000903,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+index_price,000985,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+index_price,399311,Eastmoney / AKShare,2015-01-05,2026-11-17,2884,2884,2883,available,,
+official_index_price_check,000001,CSI,2026-10-30,2026-11-02,2,2,1,available,,
+official_index_price_check,000132,CSI,2026-10-30,2026-11-02,2,2,1,available,,
+official_index_price_check,000300,CSI,2026-10-30,2026-11-02,2,2,1,available,,
+official_index_price_check,000903,CSI,2026-10-30,2026-11-02,2,2,1,available,,
+official_index_price_check,000985,CSI,2026-10-30,2026-11-02,2,2,1,available,,
+official_index_price_check,399311,CNI,2026-10-30,2026-11-02,2,2,1,available,,
+csi_membership_snapshot,000001,constituent_source,2026-11-17,2026-11-17,1,2238,2238,snapshot,,
+csi_weight_snapshot,000001,constituent_source,2026-10-30,2026-10-30,1,2233,2233,snapshot,100.01,
+csi_membership_snapshot,000132,constituent_source,2026-11-17,2026-11-17,1,100,100,snapshot,,
+csi_weight_snapshot,000132,constituent_source,2026-10-30,2026-10-30,1,100,100,snapshot,99.998,
+baostock_rebalance_observation,000300,constituent_source,2015-01-05,2025-12-15,23,6900,6900,snapshot,,
+csi_membership_snapshot,000300,constituent_source,2026-11-17,2026-11-17,1,300,300,snapshot,,
+csi_weight_snapshot,000300,constituent_source,2026-10-30,2026-10-30,1,300,300,snapshot,99.99,
+csi_membership_snapshot,000903,constituent_source,2026-11-17,2026-11-17,1,100,100,snapshot,,
+csi_weight_snapshot,000903,constituent_source,2026-10-30,2026-10-30,1,100,100,snapshot,99.999,
+csi_membership_snapshot,000985,constituent_source,2026-11-17,2026-11-17,1,5117,5117,snapshot,,
+csi_weight_snapshot,000985,constituent_source,2026-10-30,2026-10-30,1,5117,5117,snapshot,100.045,
+cni_weight_snapshot,399311,constituent_source,2026-10-30,2026-10-30,1,998,998,snapshot,100.18,
+industry_labels,399311,CNI weight workbook,2026-10-30,2026-10-30,1,998,998,snapshot,,
+CH3,,Mingshi,2000-01-04 00:00:00,2026-08-31 00:00:00,6444,6444,2816,available,,
+CH4,,Mingshi,2000-01-04 00:00:00,2026-08-31 00:00:00,6444,6444,2816,available,,
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20150106.csv,2015-01-06,2015-01-06,1,2345,2345,ok,,2015-01-06
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20150616.csv,2015-06-16,2015-06-16,1,2344,2344,ok,,2015-06-16
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20151215.csv,2015-12-15,2015-12-15,1,2553,2553,ok,,2015-12-15
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20160614.csv,2016-06-14,2016-06-14,1,2612,2612,ok,,2016-06-14
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20161213.csv,2016-12-13,2016-12-13,1,2844,2844,ok,,2016-12-13
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20170613.csv,2017-06-13,2017-06-13,1,3034,3034,ok,,2017-06-13
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20171212.csv,2017-12-12,2017-12-12,1,3257,3257,ok,,2017-12-12
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20180612.csv,2018-06-12,2018-06-12,1,3336,3336,ok,,2018-06-12
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20181218.csv,2018-12-18,2018-12-18,1,3577,3577,ok,,2018-12-18
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20190618.csv,2019-06-18,2019-06-18,1,3631,3631,ok,,2019-06-18
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20191217.csv,2019-12-17,2019-12-17,1,3786,3786,ok,,2019-12-17
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20200616.csv,2020-06-16,2020-06-16,1,3899,3899,ok,,2020-06-16
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20201215.csv,2020-12-15,2020-12-15,1,4163,4163,ok,,2020-12-15
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20210616.csv,2021-06-16,2021-06-16,1,4421,4421,ok,,2021-06-16
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20211214.csv,2021-12-14,2021-12-14,1,4712,4712,ok,,2021-12-14
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20220614.csv,2022-06-14,2022-06-14,1,4849,4849,ok,,2022-06-14
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20221213.csv,2022-12-13,2022-12-13,1,5032,5032,ok,,2022-12-13
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20230613.csv,2023-06-13,2023-06-13,1,5177,5177,ok,,2023-06-13
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20231212.csv,2023-12-12,2023-12-12,1,5319,5319,ok,,2023-12-12
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20240618.csv,2024-06-18,2024-06-18,1,5347,5347,ok,,2024-06-18
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20241217.csv,2024-12-17,2024-12-17,1,5367,5367,ok,,2024-12-17
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20250617.csv,2025-06-17,2025-06-17,1,5406,5406,ok,,2025-06-17
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20251216.csv,2025-12-16,2025-12-16,1,5445,5445,ok,,2025-12-16
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20261030.csv,2026-10-30,2026-10-30,1,5571,5571,ok,,2026-10-30
+individual_stock_price,,https://money-tree.eyunzhu.com/daily_kline/date/20261102.csv,2026-11-02,2026-11-02,1,5571,5571,ok,,2026-11-02
+continuous_membership,,,,,0,0,0,not_in_project,,
+continuous_daily_weights,,,,,0,0,0,not_in_project,,
+total_return_indices,,,,,0,0,0,not_in_project,,
+etf_prices,,,,,0,0,0,not_in_project,,
+corporate_actions,,,,,0,0,0,not_in_project,,
+historical_industry,,,,,0,0,0,not_in_project,,
+adjusted_equity_history,,,,,0,0,0,not_in_project,,

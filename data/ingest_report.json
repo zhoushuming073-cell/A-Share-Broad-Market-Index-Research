@@ -1,0 +1,56 @@
+[
+  {
+    "code": "399311",
+    "name": "国证1000",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_399311_2015-01-01_2026-11-17_20261117T235503.csv",
+    "sha256": "28fc8a5f4738b41c8d27b5628666155966878810c02731571f07061adba684fd"
+  },
+  {
+    "code": "000903",
+    "name": "中证A100",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_000903_2015-01-01_2026-11-17_20261117T235503.csv",
+    "sha256": "4c0b6fb518a7b9f7c4c761a69bd619fe91529a3e57a2d68c939098bd20bd3f6a"
+  },
+  {
+    "code": "000132",
+    "name": "上证100",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_000132_2015-01-01_2026-11-17_20261117T235503.csv",
+    "sha256": "b9d6d86ffda698f42cdbf1f82ecd0b344648cd864f5ab69678948f4ff992402e"
+  },
+  {
+    "code": "000300",
+    "name": "沪深300",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_000300_2015-01-01_2026-11-17_20261117T235504.csv",
+    "sha256": "a21719f791b57c23af43b2128080fe482180421883424a80cdc99813f64d1f71"
+  },
+  {
+    "code": "000001",
+    "name": "上证综合指数",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_000001_2015-01-01_2026-11-17_20261117T235504.csv",
+    "sha256": "80e07badf7caf5d2c2142084e0ed9d81c6904cd618cc21caae0ba84a8237413b"
+  },
+  {
+    "code": "000985",
+    "name": "中证全指",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data\\raw_index\\eastmoney_index_000985_2015-01-01_2026-11-17_20261117T235504.csv",
+    "sha256": "9df227a22fcedcaed763f5e42bfbe4fe8d1d7fdd04a5ce1edf07e3b380be636c"
+  }
+]

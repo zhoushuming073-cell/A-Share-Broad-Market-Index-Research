@@ -1,0 +1,96 @@
+[
+  {
+    "task": "cni_history",
+    "error": "ValueError(\"not an Excel file: http://www.cnindex.com.cn/sample-detail/download-adjustment?indexcode=399311, b'399311\\\\xe7\\\\x9a\\\\x84\\\\xe6\\\\xa0\\\\xb7\\\\xe6\\\\x9c\\\\xac\\\\xe5\\\\x8e\\\\x86\\\\xe5\\\\x8f\\\\xb2\\\\xe8\\\\xb0\\\\x83\\\\xe6\\\\xa0\\\\xb7\\\\xe6\\\\x96\\\\x87\\\\xe4\\\\xbb\\\\xb6\\\\xe4\\\\xb8\\\\x8d\\\\xe5\\\\xad\\\\x98\\\\xe5\\\\x9c\\\\xa8\\\\xef\\\\xbc\\\\x81'\")"
+  },
+  {
+    "index": "399311",
+    "kind": "weight_snapshot",
+    "dates": [
+      "2026-10-30"
+    ],
+    "members": 998,
+    "weight_sum_pct": 100.18,
+    "raw": "data\\raw_constituents\\cni_399311_weight_f0a4b5ac7d1f.xls"
+  },
+  {
+    "index": "000903",
+    "kind": "membership",
+    "date": "2026-11-17",
+    "members": 100,
+    "weight_sum_pct": null,
+    "raw": "data\\raw_constituents\\csi_000903_membership_ff51daebd106.xls"
+  },
+  {
+    "index": "000903",
+    "kind": "weight",
+    "date": "2026-10-30",
+    "members": 100,
+    "weight_sum_pct": 99.999,
+    "raw": "data\\raw_constituents\\csi_000903_weight_8f57d939edd4.xls"
+  },
+  {
+    "index": "000132",
+    "kind": "membership",
+    "date": "2026-11-17",
+    "members": 100,
+    "weight_sum_pct": null,
+    "raw": "data\\raw_constituents\\csi_000132_membership_1ada90eee0bc.xls"
+  },
+  {
+    "index": "000132",
+    "kind": "weight",
+    "date": "2026-10-30",
+    "members": 100,
+    "weight_sum_pct": 99.998,
+    "raw": "data\\raw_constituents\\csi_000132_weight_d879cb6680d6.xls"
+  },
+  {
+    "index": "000300",
+    "kind": "membership",
+    "date": "2026-11-17",
+    "members": 300,
+    "weight_sum_pct": null,
+    "raw": "data\\raw_constituents\\csi_000300_membership_4036bde6b7ef.xls"
+  },
+  {
+    "index": "000300",
+    "kind": "weight",
+    "date": "2026-10-30",
+    "members": 300,
+    "weight_sum_pct": 99.99,
+    "raw": "data\\raw_constituents\\csi_000300_weight_e5d80f178df1.xls"
+  },
+  {
+    "index": "000001",
+    "kind": "membership",
+    "date": "2026-11-17",
+    "members": 2238,
+    "weight_sum_pct": null,
+    "raw": "data\\raw_constituents\\csi_000001_membership_dedc61cfd19e.xls"
+  },
+  {
+    "index": "000001",
+    "kind": "weight",
+    "date": "2026-10-30",
+    "members": 2233,
+    "weight_sum_pct": 100.01,
+    "raw": "data\\raw_constituents\\csi_000001_weight_c073d0123dde.xls"
+  },
+  {
+    "index": "000985",
+    "kind": "membership",
+    "date": "2026-11-17",
+    "members": 5117,
+    "weight_sum_pct": null,
+    "raw": "data\\raw_constituents\\csi_000985_membership_cc3163f9c909.xls"
+  },
+  {
+    "index": "000985",
+    "kind": "weight",
+    "date": "2026-10-30",
+    "members": 5117,
+    "weight_sum_pct": 100.045,
+    "raw": "data\\raw_constituents\\csi_000985_weight_d5504939ec33.xls"
+  }
+]

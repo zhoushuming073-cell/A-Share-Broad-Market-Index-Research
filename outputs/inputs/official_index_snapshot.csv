@@ -1,0 +1,13 @@
+﻿date,close,index_code,source,api
+2026-10-30,4202.4138,399311,CNI,index_hist_cni
+2026-11-02,4256.3311,399311,CNI,index_hist_cni
+2026-10-30,3821.66,000903,CSI,stock_zh_index_hist_csindex
+2026-11-02,3847.24,000903,CSI,stock_zh_index_hist_csindex
+2026-10-30,5002.44,000132,CSI,stock_zh_index_hist_csindex
+2026-11-02,5145.43,000132,CSI,stock_zh_index_hist_csindex
+2026-10-30,3985.5,000300,CSI,stock_zh_index_hist_csindex
+2026-11-02,4016.92,000300,CSI,stock_zh_index_hist_csindex
+2026-10-30,3599.02,000001,CSI,stock_zh_index_hist_csindex
+2026-11-02,3638.03,000001,CSI,stock_zh_index_hist_csindex
+2026-10-30,4952.5,000985,CSI,stock_zh_index_hist_csindex
+2026-11-02,5034.54,000985,CSI,stock_zh_index_hist_csindex
