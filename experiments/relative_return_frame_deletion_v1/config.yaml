@@ -1,0 +1,11 @@
+seed: 20261119
+replica_seed: 19470517
+proportions: [0.005,0.01,0.02,0.05,0.10,0.20,0.30]
+counts: [1,2,3,5,10,20,30,50,100]
+tail_each: [0.005,0.01,0.025,0.05]
+uniform_trials: 100000
+secondary_trials: 3000
+replica_trials: 5000
+batch: 1000
+blocks: [5,10,20,60]
+bootstrap_trials: 20000

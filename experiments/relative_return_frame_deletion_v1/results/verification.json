@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "input_sha256": "c941e8ce7d982f8c0d52d1739c095714db398865d9d2004ab0d7084b5aa0538c",
+  "calendar": 2883,
+  "core_uniform": 700000,
+  "total_simulations": 1071000,
+  "analytic_max_abs_mean_z": 2.46713301538197,
+  "analytic_max_relative_sd_error": 0.028627412491726734,
+  "independent_seed_max_abs_z": 1.4042285447139968,
+  "cases_verified": 56,
+  "first_draw_masks_verified": 126,
+  "flip_days": 2
+}

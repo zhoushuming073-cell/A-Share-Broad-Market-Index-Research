@@ -1,0 +1,12 @@
+numpy==2.2.6
+pandas==2.3.3
+numba==0.68.0
+scipy==1.15.3
+statsmodels==0.15.0
+exchange_calendars==4.13.2
+matplotlib==3.10.3
+PyYAML==6.0.2
+PyMuPDF==1.26.4
+pypandoc_binary==1.17
+python-docx==1.2.0
+pywin32==311; sys_platform=="win32"
