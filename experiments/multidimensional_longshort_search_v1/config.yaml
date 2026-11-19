@@ -1,0 +1,16 @@
+seed: 7319
+second_seed: 9319
+random_per_seed: 128
+sobol_per_seed: 256
+tpe_per_seed: 128
+nsga_per_seed: 128
+population: 32
+fold_tpe: 24
+fold_nsga: 64
+fee: 0.0005
+borrow: 0.02
+finance: 0.03
+max_gross: 2.5
+ideal_gate: {cagr: 0.015, sharpe: 0.65, drawdown: 0.12, active: 0.30, positive_years: 0.60}
+ideal_weights: [0.20,0.25,0.20,0.15,0.15,0.05]
+overall_weights: [0.25,0.15,0.12,0.15,0.12,0.08,0.08,0.05]

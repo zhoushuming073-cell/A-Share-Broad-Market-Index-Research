@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "daily_ledger_rows": 25175,
+  "ranked_candidates": 1245,
+  "calendar_sessions": 2884,
+  "winner_decisions_rebuilt": true,
+  "input_sha256": "c941e8ce7d982f8c0d52d1739c095714db398865d9d2004ab0d7084b5aa0538c",
+  "outer_windows": 18,
+  "controls": [
+    "as-of dates",
+    "historical feature samples",
+    "unit NAV compounding",
+    "marked trading volume including fold exits",
+    "short collateral excluded from funding",
+    "margin ceiling",
+    "daily algebraic attribution",
+    "all leaderboard memberships and orders"
+  ]
+}
