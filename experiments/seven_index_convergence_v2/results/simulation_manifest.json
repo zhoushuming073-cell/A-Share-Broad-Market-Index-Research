@@ -1,0 +1,66 @@
+{
+  "config": {
+    "codes": [
+      "000001",
+      "000985",
+      "000300",
+      "000903",
+      "000132",
+      "399311",
+      "000905"
+    ],
+    "start": "2020-07-23",
+    "end": "2026-11-17",
+    "long_start": "2015-01-05",
+    "k": [
+      10,
+      20,
+      50
+    ],
+    "primary_k": 10,
+    "fractions": [
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "thresholds": [
+      2,
+      3,
+      5,
+      10,
+      21
+    ],
+    "draws": 10000,
+    "batch": 250,
+    "seed": 20261123,
+    "blocks": [
+      5,
+      20,
+      60
+    ]
+  },
+  "versions": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "numba": "0.68.0",
+    "exchange_calendars": "4.13.2",
+    "statsmodels": "0.15.0",
+    "matplotlib": "3.10.3",
+    "PyYAML": "6.0.2"
+  },
+  "generator": "PCG64",
+  "random_seed": 20261123,
+  "date_seed": 20261124,
+  "block_seeds": {
+    "5": 20261228,
+    "20": 20261243,
+    "60": 20261283
+  },
+  "input_sha256": {
+    "main": "5b4e64e469da48eb38dd0f38d6ea4c6a884fd1c6702b9b12a0258e260f9eee2d",
+    "long": "15dffba8bb56723cf51dcdbc503a10143d9b7f1378988832d86820a2774ef7bf"
+  }
+}

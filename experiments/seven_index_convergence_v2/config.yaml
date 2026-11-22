@@ -1,0 +1,18 @@
+codes: ["000001","000985","000300","000903","000132","399311","000905"]
+start: "2020-07-23"
+end: "2026-11-17"
+long_start: "2015-01-05"
+k: [10, 20, 50]
+primary_k: 10
+fractions: [0.005, 0.01, 0.02, 0.05, 0.10, 0.20]
+thresholds: [2, 3, 5, 10, 21]
+draws: 10000
+batch: 250
+seed: 20261123
+blocks: [5, 20, 60]
+# Fractions use half-up rounding. Score ties use earlier dates.
+# U and R budget ranks use max gap among the pair lists, then overall S and date.
+# Equality budgets never pad an incomplete natural set.
+# Random-deletion tail: larger improvement. Holm across distinct main-sample deletion masks.
+# Date-null tail: larger overlap. Holm across K and the six date statistics.
+# Block uncertainty: percentile intervals, plus per-path improvement over equal-budget random.

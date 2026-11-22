@@ -1,0 +1,11 @@
+K,budget,method,available,sample
+10,50,R2,37,main
+10,56,R2,37,main
+20,112,R2,75,main
+50,259,R2,176,main
+10,47,R2,29,long
+10,50,U,47,long
+10,50,R2,29,long
+20,50,R2,49,long
+20,82,R2,49,long
+50,217,R2,143,long
