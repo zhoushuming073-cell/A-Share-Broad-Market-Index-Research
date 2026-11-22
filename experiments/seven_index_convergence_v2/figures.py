@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 import numpy as np
 import pandas as pd
-from data_validation import CFG, CODES, HERE, LABELS, NAMES, OUT
+from data_validation import CFG, CODES, HERE, LABELS, NAMES, OUT, PAIRS
 from bootstrap_inference import METHODS
 
 FIG = HERE / "figures"
@@ -31,6 +31,45 @@ def panel(ax, curves, title):
     ax.set_xlim(curves.index[0],curves.index[-1])
     ax.axhline(0,color="#89939e",lw=.6)
     ax.grid(axis="y",alpha=.16)
+
+
+def independent_pair_panels(k):
+    closes = pd.read_csv(OUT/"input_closes_main.csv",index_col=0,parse_dates=True)
+    returns = np.log(closes).diff().fillna(0.)
+    original = closes / closes.iloc[0] - 1
+    keys = pd.read_csv(OUT/"pairwise_key_dates.csv",parse_dates=["date"]).query("sample=='main' and K==@k")
+    results = pd.read_csv(OUT/"independent_pair_deletion.csv").query("sample=='main' and K==@k").set_index("pair")
+    panels = []
+    for (a,b),label in zip(PAIRS,LABELS):
+        codes = [CODES[a], CODES[b]]
+        keep = returns.loc[:,codes].copy()
+        keep.loc[keys.loc[keys.pair.eq(label),"date"]] = 0.
+        panels.append((codes,label,np.expm1(keep.cumsum())))
+    values = np.concatenate([frame.values.ravel() for _,_,frame in panels]+[original.values.ravel()])
+    margin = .04*(values.max()-values.min())
+    for start in range(0,len(panels),7):
+        fig,axes=plt.subplots(4,2,figsize=(12,9.5),sharex=True,sharey=True,layout="constrained")
+        for ax,(codes,label,after) in zip(axes.flat,panels[start:start+7]):
+            for code,color in zip(codes,("#235686","#b95129")):
+                ax.plot(original.index,original[code],ls="--",lw=.8,color=color,alpha=.47)
+                ax.plot(after.index,after[code],lw=1.0,color=color,label=NAMES[code])
+            delta=results.loc[label,"improvement"]
+            ax.set_title(f"{NAMES[codes[0]]} / {NAMES[codes[1]]}    RMS改善率 {delta:+.1%}",
+                         fontsize=10,loc="left")
+            ax.set_xlim(closes.index[0],closes.index[-1])
+            ax.set_ylim(values.min()-margin,values.max()+margin)
+            ax.xaxis.set_major_locator(mdates.YearLocator(2))
+            ax.yaxis.set_major_formatter(PercentFormatter(1))
+            ax.tick_params(labelbottom=True,labelleft=True,labelsize=8)
+            ax.axhline(0,color=".55",lw=.6)
+            ax.grid(axis="y",alpha=.16)
+            ax.legend(loc="upper left",fontsize=7,frameon=False,ncol=2)
+        axes.flat[-1].axis("off")
+        axes.flat[-1].text(.03,.53,"虚线为原始累计价格收益\n实线为该配对独立剔除关键日后的累计收益\n每个面板的删除日期由本配对独立识别",
+                           transform=axes.flat[-1].transAxes,va="center",linespacing=1.7,fontsize=10)
+        fig.suptitle(f"21组配对逐一比较  |  每组各删 {k} 日  |  第 {start//7+1} / 3 页",
+                     fontweight="bold")
+        save(fig,f"09_independent_pairs_{start//7+1}")
 
 
 def build():
@@ -155,3 +194,4 @@ def build():
         ax.yaxis.set_major_formatter(PercentFormatter(1))
         ax.axhline(0,color=".4",lw=.7)
     save(fig,"08_block_bootstrap")
+    independent_pair_panels(k)
