@@ -1,0 +1,21 @@
+{
+  "input": "input_closes_main.csv",
+  "sha256": "5b4e64e469da48eb38dd0f38d6ea4c6a884fd1c6702b9b12a0258e260f9eee2d",
+  "closes": 1532,
+  "days": 1531,
+  "start": "2020-07-23",
+  "end": "2026-11-17",
+  "first_late": "2023-09-14",
+  "windows": [
+    60,
+    120,
+    252
+  ],
+  "draws": 10000,
+  "seed": 20261122,
+  "blocks": [
+    5,
+    20,
+    60
+  ]
+}
