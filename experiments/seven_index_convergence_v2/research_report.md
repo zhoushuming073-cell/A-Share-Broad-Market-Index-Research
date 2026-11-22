@@ -183,3 +183,7 @@ python -m unittest discover -s experiments/seven_index_convergence_v2 -v
 ~~~
 
 [配置](config.yaml) · [计算入口](run_all.py) · [随机种子、依赖版本和行情哈希](results/simulation_manifest.json) · [测试](test_research.py) · [图表目录](figures/) · [完整结果目录](results/)
+
+## 后续复核　曲线的段内平行程度
+
+改用段内中心化距离后，原始行情有15/21组在后半段的走势比前半段更平行。若每组各删10日，在后半段与原始行情比较，60日窗口有19组更平行，252日窗口有3组，整个后半段有2组。方法、公式和逐组结果见综合报告第14章。[Word报告](../../research_report.docx) · [Markdown源稿](../../reports/integrated/research_report.md#七指数收益曲线在后半段是否平行) · [重算脚本](local_shape.py) · [统计明细](results/local_shape_pairs.csv)

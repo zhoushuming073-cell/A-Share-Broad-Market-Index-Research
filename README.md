@@ -12,6 +12,8 @@
 
 七指数V2实验考察21组配对的关键日重合，以及整体分化、并集、重复集合和投票法的删日效果。Word第13章收录完整实验，表52列出逐组结果，图51至图53展示各配对独立删日前后的曲线。[七指数V2报告](experiments/seven_index_convergence_v2/research_report.md) · [计算代码与结果](experiments/seven_index_convergence_v2/)
 
+Word第14章检验两条累计曲线在已有高低差时是否平行。表55逐组比较前后半段，表56给出60、120和252日窗口的删日效果。[起点重设示例](experiments/seven_index_convergence_v2/figures/10_rebased_example.png) · [21组后半段对照图](experiments/seven_index_convergence_v2/figures/11_late_pair_shapes.png) · [逐组距离与改善率](experiments/seven_index_convergence_v2/results/local_shape_pairs.csv)
+
 ## 指数涨幅背后的个股贡献
 
 2026-11-02，中证A100成分股带来的正贡献为131.96个基点，负贡献为−65.03个基点。两者合计使指数上涨约66.93个基点，按贡献绝对值计算，当日有 **66.02%** 的涨跌相互抵消。国证1000同日可匹配的996只股票中，行业内部抵消占总抵消的 **94.19%**。这两组数分别回答抵消了多少、抵消发生在哪里。它们的历史稳定性仍待连续成分权重和行业数据验证。[证券级贡献](outputs/tables/e4_snapshot_contributions.csv) · [行业分解](outputs/tables/e5_decomposition.csv)
