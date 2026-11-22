@@ -8,6 +8,8 @@
 
 后续指数行情研究采用固定九指数池，在上述六条基础上加入中证500（000905）、创业板指（399006）和科创50（000688）。九条共同样本从科创50正式发布实时行情的2020-07-23收盘开始。[研究池名单与数据说明](data/README.md) · [九指数共同收盘价](outputs/tables/index_closes_nine.csv)
 
+九指数实验覆盖36组配对及10万条联合区块模拟路径。报告图1将原始九条收益曲线与同步剔除十个共同关键日后的九条曲线并列。[实验报告](experiments/nine_index_path_dependence_v1/research_report.md) · [对照图](experiments/nine_index_path_dependence_v1/figures/nine_paths.png) · [完整 Word 研究报告](research_report.docx)
+
 ## 指数涨幅背后的个股贡献
 
 2026-11-02，中证A100成分股带来的正贡献为131.96个基点，负贡献为−65.03个基点。两者合计使指数上涨约66.93个基点，按贡献绝对值计算，当日有 **66.02%** 的涨跌相互抵消。国证1000同日可匹配的996只股票中，行业内部抵消占总抵消的 **94.19%**。这两组数分别回答抵消了多少、抵消发生在哪里。它们的历史稳定性仍待连续成分权重和行业数据验证。[证券级贡献](outputs/tables/e4_snapshot_contributions.csv) · [行业分解](outputs/tables/e5_decomposition.csv)
