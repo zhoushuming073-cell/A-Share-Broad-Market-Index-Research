@@ -1,6 +1,6 @@
 # A股宽基指数的内部收益抵消与投资价值研究
 
-**[阅读主研究报告](reports/preliminary_report.md)** · [实验完成情况](reports/experiment_status.md) · [数据缺口](reports/data_gaps.md) · [复现说明](reports/reproduction.md)
+**[下载完整 Word 研究报告](research_report.docx)** · [报告 Markdown 源稿](reports/integrated/research_report.md) · [宽基投资价值初稿](reports/preliminary_report.md) · [实验完成情况](reports/experiment_status.md) · [复现说明](reports/reproduction.md)
 
 当一条宽基指数收盘只涨跌一点时，它的成分股究竟经历了多大的涨跌？本研究用前一交易日的成分权重衡量每只股票的收益贡献，再考察这些贡献在行业内部和行业之间抵消了多少。投资价值由长期收益、风险和组合表现共同检验。
 
@@ -8,7 +8,9 @@
 
 后续指数行情研究采用固定九指数池，在上述六条基础上加入中证500（000905）、创业板指（399006）和科创50（000688）。九条共同样本从科创50正式发布实时行情的2020-07-23收盘开始。[研究池名单与数据说明](data/README.md) · [九指数共同收盘价](outputs/tables/index_closes_nine.csv)
 
-九指数实验覆盖36组配对及10万条联合区块模拟路径。报告图1将原始九条收益曲线与同步剔除十个共同关键日后的九条曲线并列。[实验报告](experiments/nine_index_path_dependence_v1/research_report.md) · [对照图](experiments/nine_index_path_dependence_v1/figures/nine_paths.png) · [完整 Word 研究报告](research_report.docx)
+九指数实验覆盖36组配对及10万条联合区块模拟路径。[九指数实验报告](experiments/nine_index_path_dependence_v1/research_report.md) · [原始与同步删日对照图](experiments/nine_index_path_dependence_v1/figures/nine_paths.png)
+
+七指数V2实验考察21组配对的关键日重合，以及整体分化、并集、重复集合和投票法的删日效果。Word第13章收录完整实验，表52列出逐组结果，图51至图53展示各配对独立删日前后的曲线。[七指数V2报告](experiments/seven_index_convergence_v2/research_report.md) · [计算代码与结果](experiments/seven_index_convergence_v2/)
 
 ## 指数涨幅背后的个股贡献
 
@@ -42,3 +44,5 @@ python scripts/run_e5_decomposition.py
 ## 专题附录
 
 指数间多空配对实验单独归档，包含参数搜索、逐日净值、成本和工具回放。[配对交易附录与复现入口](reports/pair_experiments.md)
+
+六指数探索性实验比较市场极端日与配对分化日对终点排名的影响。[脚本](scripts/pair_extreme_days.py) · [统计表](outputs/tables/pair_extreme_days_summary.csv) · [剔除日期](outputs/tables/pair_extreme_days_exclusions.csv) · [对照图](outputs/figures/pair_extreme_days.png)
