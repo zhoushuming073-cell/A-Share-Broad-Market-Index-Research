@@ -1,0 +1,9 @@
+{
+  "seed": 20261122,
+  "draws_per_budget": 10000,
+  "sha256": {
+    "input_closes_main.csv": "5b4e64e469da48eb38dd0f38d6ea4c6a884fd1c6702b9b12a0258e260f9eee2d",
+    "deletion_dates.csv": "d972a504e1e836e1131d856ec0d39407513e6f16b072f076acbb248b2678c9c4",
+    "convergence_results.csv": "d54ec1bae9f3d0616f1bdd10092adb7b4021f62749ac7130d132a327b05224db"
+  }
+}

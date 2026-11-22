@@ -16,6 +16,8 @@ Word第14章检验两条累计曲线在已有高低差时是否平行。表55逐
 
 七指数V3复核原始价格的局部路径。完整60、120、252日重置窗口在后半段分别缩小6.23%、5.50%、10.17%，同步区块检验未检出显著的前后差异。Word第15章给出21组热力图、中央日口径复现及早期偏移集中度。[V3报告](experiments/seven_index_convergence_v3/research_report.md) · [复现代码](experiments/seven_index_convergence_v3/run.py) · [区块检验结果](experiments/seven_index_convergence_v3/results/bootstrap_tests.csv)
 
+第16章用V3滚动重置RMS复评V2四种关键日名单。主设定下60日距离均缩小，252日距离均扩大。[原始名单与同删10日比较](experiments/seven_index_convergence_v3/figures/key_day_budgets.png) · [全池结果](experiments/seven_index_convergence_v3/results/key_day_pool.csv) · [随机删日检验](experiments/seven_index_convergence_v3/results/key_day_random_tests.csv)
+
 ## 指数涨幅背后的个股贡献
 
 2026-11-02，中证A100成分股带来的正贡献为131.96个基点，负贡献为−65.03个基点。两者合计使指数上涨约66.93个基点，按贡献绝对值计算，当日有 **66.02%** 的涨跌相互抵消。国证1000同日可匹配的996只股票中，行业内部抵消占总抵消的 **94.19%**。这两组数分别回答抵消了多少、抵消发生在哪里。它们的历史稳定性仍待连续成分权重和行业数据验证。[证券级贡献](outputs/tables/e4_snapshot_contributions.csv) · [行业分解](outputs/tables/e5_decomposition.csv)
