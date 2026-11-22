@@ -1,0 +1,35 @@
+[
+  {
+    "code": "000905",
+    "name": "中证500",
+    "provider": "sina",
+    "api": "akshare.stock_zh_index_daily",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data/raw_index/sina_index_000905_2015-01-01_2026-11-17_20261122T192056.csv",
+    "sha256": "49bf038fdf9dfb282b5a887ef9e4c84e21e19c09de16b038a5bbb343dc716544"
+  },
+  {
+    "code": "399006",
+    "name": "创业板指",
+    "provider": "sina",
+    "api": "akshare.stock_zh_index_daily",
+    "rows": 2884,
+    "first": "2015-01-05",
+    "last": "2026-11-17",
+    "raw": "data/raw_index/sina_index_399006_2015-01-01_2026-11-17_20261122T192056.csv",
+    "sha256": "3a890f5cbb19406ed4ccec1947be2771c9defef5901cc9711ec22d63fdd12872"
+  },
+  {
+    "code": "000688",
+    "name": "科创50",
+    "provider": "sina",
+    "api": "akshare.stock_zh_index_daily",
+    "rows": 1665,
+    "first": "2020-01-02",
+    "last": "2026-11-17",
+    "raw": "data/raw_index/sina_index_000688_2015-01-01_2026-11-17_20261122T192056.csv",
+    "sha256": "0a3f72d210338a3e801473654e6413221a61264179c3aa4a845bed72f1f60519"
+  }
+]

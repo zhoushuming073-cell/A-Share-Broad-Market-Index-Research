@@ -1,8 +1,9 @@
 import re
 
 from research_common import db, csv, pd, np
+from index_pool import INDICES, LEGACY_CODES, PROVIDERS, STAR50_REALTIME_START
 
-BROAD = {"000001", "000300", "000903", "000132", "399311", "000985"}
+BROAD = set(INDICES)
 
 def category(code,name):
     if code in BROAD or re.fullmatch(r"(中证(A?(50|100|200|300|500|800|1000|2000|5000)|全指)|沪深300|上证(50|180|380|综指)|深证(成指|100)|国证(2000|A指)|科创(50|100|200)|创业板(指|50)|北证50)(指数)?",name):
@@ -16,33 +17,45 @@ def category(code,name):
     return "待核实类别"
 
 
-def universe():
+def universe(*, legacy=False):
+    """Load the fixed nine-index panel, or the six-index replay input."""
+    codes = LEGACY_CODES if legacy else tuple(INDICES)
+    placeholders = ",".join("?" for _ in codes)
     with db() as con:
         data = pd.read_sql_query(
             "SELECT d.index_code,m.index_name,d.provider,d.trade_date,d.close FROM index_daily d "
-            "LEFT JOIN index_master m USING(provider,index_code) "
-            "ORDER BY d.trade_date,d.index_code", con, parse_dates=["trade_date"])
-    providers=(data.groupby(["index_code","provider"]).close.count().reset_index(name="count")
-               .assign(preferred=lambda d:d.provider.eq("eastmoney"))
-               .sort_values(["count","preferred","provider"],ascending=[False,False,True])
-               .drop_duplicates("index_code"))
-    data=data.merge(providers[["index_code","provider"]],on=["index_code","provider"])
+            "JOIN index_master m USING(provider,index_code) "
+            f"WHERE d.index_code IN ({placeholders}) "
+            "ORDER BY d.trade_date,d.index_code", con, params=codes, parse_dates=["trade_date"])
+    data = data.loc[data.provider.eq(data.index_code.map(PROVIDERS))]
+    missing = set(codes) - set(data.index_code)
+    if missing:
+        raise ValueError("Missing price series in the fixed index pool: " + ", ".join(sorted(missing)))
     prices = data.pivot(index="trade_date", columns="index_code", values="close")
     prices = prices.where(np.isfinite(prices) & (prices > 0))
+    first = prices.apply(pd.Series.first_valid_index)
+    last = prices.apply(pd.Series.last_valid_index)
+    start, end = first.max(), last.min()
+    if not legacy:
+        start = max(start, pd.Timestamp(STAR50_REALTIME_START))
+    aligned = prices.loc[start:end]
+    if aligned.empty or aligned.isna().any().any():
+        raise ValueError("Missing closes within the shared index trading period")
     rows = []
-    for code in prices:
+    for code in aligned:
         name = data.loc[data.index_code.eq(code),"index_name"].iloc[0]
         s = prices[code].dropna()
-        kind=category(code,str(name))
-        broad = kind=="宽基"
-        rows.append(dict(code=code,name=name,category=kind,provider=data.loc[data.index_code.eq(code),"provider"].iloc[0],
+        rows.append(dict(code=code,name=name,category=category(code,str(name)),provider=PROVIDERS[code],
                          start=s.index.min(),end=s.index.max(),valid_days=len(s),
-                         missing_rate=1-len(s)/len(prices),in_main=broad and len(s)>=1260,
-                         exclusion="" if broad and len(s)>=1260 else "分类未确认或样本少于1260日"))
+                         missing_rate=s.reindex(prices.loc[s.index.min():s.index.max()].index).isna().mean(),
+                         in_main=True,exclusion=""))
     u = pd.DataFrame(rows)
-    csv(u,"index_universe")
-    return prices[u.loc[u.in_main,"code"]].dropna(),u
+    return aligned, u
 
 
 if __name__=="__main__":
-    universe()
+    close, metadata = universe()
+    csv(metadata, "index_universe")
+    csv(metadata, "index_universe_nine")
+    csv(close, "index_closes_nine", index=True)
+    print(f"{len(close.columns)} indices; {len(close)} closes; {close.index[0].date()} to {close.index[-1].date()}")

@@ -18,7 +18,8 @@ def load(name):
 
 
 def inputs():
-    p,u=universe()
+    # Archived six-index results and daily paths use this original universe.
+    p,u=universe(legacy=True)
     r=p.pct_change(fill_method=None).iloc[1:]
     n=len(r)
     return p,r,u,(n*3//5,n*4//5)
@@ -31,6 +32,7 @@ def paths(a,b):
 
 def collect():
     p,r,u,(tr,va)=inputs()
+    csv(u,"index_universe_legacy_six")
     ARCHIVE.mkdir(exist_ok=True,parents=True)
     eg=rolling_tests(p,r.index)
     csv(eg,"pair_rolling_cointegration")

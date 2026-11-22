@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+from importlib.metadata import version
 import json
 import sqlite3
 import uuid
@@ -12,20 +13,15 @@ from pathlib import Path
 import akshare as ak
 import pandas as pd
 
+from index_pool import INDICES, PROVIDERS, SINA_SYMBOLS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 RAW = DATA / "raw_index"
 DB = DATA / "a_share_indices.sqlite"
-INDICES = {
-    "399311": ("国证1000", "CNI"),
-    "000903": ("中证A100", "CSI"),
-    "000132": ("上证100", "SSE/CSI"),
-    "000300": ("沪深300", "CSI"),
-    "000001": ("上证综合指数", "SSE"),
-    "000985": ("中证全指", "CSI"),
-}
 COLUMNS = ["date", "open", "close", "high", "low", "volume", "turnover_value", "amplitude_pct", "change_pct", "change_points", "turnover_pct"]
+OHLCV = ["date", "open", "high", "low", "close", "volume"]
 
 
 def init(conn: sqlite3.Connection) -> None:
@@ -59,36 +55,56 @@ def init(conn: sqlite3.Connection) -> None:
     """)
 
 
-def fetch_one(conn: sqlite3.Connection, code: str, start: str, end: str) -> dict:
-    name, publisher = INDICES[code]
+def fetch_daily(code: str, start: str, end: str) -> pd.DataFrame:
+    if code in SINA_SYMBOLS:
+        return ak.stock_zh_index_daily(symbol=SINA_SYMBOLS[code]).loc[:, OHLCV]
     df = ak.index_zh_a_hist(symbol=code, period="daily", start_date=start.replace("-", ""), end_date=end.replace("-", ""))
-    if df.empty or len(df.columns) != len(COLUMNS):
+    if len(df.columns) != len(COLUMNS):
         raise ValueError(f"{code}: empty or unexpected column count {list(df.columns)}")
-    df.columns = COLUMNS  # AKShare Eastmoney API field order, recorded in source.
+    df.columns = COLUMNS
+    return df
+
+
+def prepare_daily(df: pd.DataFrame, code: str, start: str, end: str) -> pd.DataFrame:
+    df = df.copy()
     df["date"] = pd.to_datetime(df["date"], errors="raise").dt.strftime("%Y-%m-%d")
     if df["date"].isna().any() or df["date"].duplicated().any():
         raise ValueError(f"{code}: invalid or duplicated dates")
+    df = df.loc[df["date"].between(start, end)]
+    if df.empty:
+        raise ValueError(f"{code}: no data in requested period")
     if (df["close"] <= 0).any() or df["close"].isna().any():
         raise ValueError(f"{code}: invalid close")
-    df = df.sort_values("date").reset_index(drop=True)
-    df["close_return"] = df["close"].pct_change(fill_method=None)
-    # The first return is unknown because the preceding close was not requested.
+    if (df["high"] < df[["open", "close", "low"]].max(axis=1)).any() or (
+        df["low"] > df[["open", "close"]].min(axis=1)
+    ).any():
+        raise ValueError(f"{code}: inconsistent OHLC")
+    return df.sort_values("date").reset_index(drop=True)
+
+
+def store_daily(conn: sqlite3.Connection, code: str, start: str, end: str, df: pd.DataFrame) -> dict:
+    name, publisher = INDICES[code]
+    provider = PROVIDERS[code]
+    source, api = ("Sina Finance finance.sina.com.cn", "akshare.stock_zh_index_daily") if provider == "sina" else (
+        "Eastmoney push2his.eastmoney.com", "akshare.index_zh_a_hist"
+    )
     fetched_at = datetime.now().astimezone().isoformat(timespec="seconds")
     stamp = datetime.now().strftime("%Y%m%dT%H%M%S")
     RAW.mkdir(parents=True, exist_ok=True)
-    raw_path = RAW / f"eastmoney_index_{code}_{start}_{end}_{stamp}.csv"
-    df.drop(columns=["close_return"]).to_csv(raw_path, index=False, encoding="utf-8-sig", float_format="%.10f")
+    raw_path = RAW / f"{provider}_index_{code}_{start}_{end}_{stamp}.csv"
+    df.to_csv(raw_path, index=False, encoding="utf-8-sig", float_format="%.10f")
     digest = hashlib.sha256(raw_path.read_bytes()).hexdigest()
     batch_id = uuid.uuid4().hex
-    import importlib.metadata
+    stored = df.reindex(columns=COLUMNS)
+    stored["close_return"] = stored["close"].pct_change(fill_method=None)
     with conn:
-        conn.execute("INSERT OR REPLACE INTO index_master VALUES (?,?,?,?,?)", ("eastmoney", code, name, publisher, "price"))
+        conn.execute("INSERT OR REPLACE INTO index_master VALUES (?,?,?,?,?)", (provider, code, name, publisher, "price"))
         conn.execute("INSERT INTO ingest_batch VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
-            batch_id, fetched_at, "Eastmoney push2his.eastmoney.com", "akshare.index_zh_a_hist",
-            importlib.metadata.version("akshare"), start, end, str(raw_path.relative_to(ROOT)), digest,
+            batch_id, fetched_at, source, api,
+            version("akshare"), start, end, raw_path.relative_to(ROOT).as_posix(), digest,
             len(df), df["date"].iloc[0], df["date"].iloc[-1],
         ))
-        for row in df.itertuples(index=False):
+        for row in stored.itertuples(index=False):
             vals = [None if pd.isna(v) else v for v in row]
             conn.execute("""INSERT INTO index_daily VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                 ON CONFLICT(provider,index_code,trade_date) DO UPDATE SET
@@ -99,30 +115,47 @@ def fetch_one(conn: sqlite3.Connection, code: str, start: str, end: str) -> dict
                 change_points_source=excluded.change_points_source,
                 turnover_pct=excluded.turnover_pct, close_return=excluded.close_return,
                 batch_id=excluded.batch_id""", (
-                    "eastmoney", code, vals[0], vals[1], vals[3], vals[4], vals[2],
+                    provider, code, vals[0], vals[1], vals[3], vals[4], vals[2],
                     vals[5], vals[6], vals[7], vals[8], vals[9], vals[10], vals[11], batch_id,
                 ))
-    return {"code": code, "name": name, "rows": len(df), "first": df["date"].iloc[0], "last": df["date"].iloc[-1], "raw": str(raw_path.relative_to(ROOT)), "sha256": digest}
+        # Recompute across batch boundaries after a partial or overlapping refresh.
+        conn.execute("""
+            WITH recalculated AS (
+                SELECT trade_date, close / LAG(close) OVER (ORDER BY trade_date) - 1 AS daily_return
+                FROM index_daily WHERE provider = ? AND index_code = ?
+            )
+            UPDATE index_daily SET close_return = recalculated.daily_return
+            FROM recalculated WHERE provider = ? AND index_code = ?
+              AND index_daily.trade_date = recalculated.trade_date
+        """, (provider, code, provider, code))
+    return {"code": code, "name": name, "provider": provider, "api": api, "rows": len(df),
+            "first": df["date"].iloc[0], "last": df["date"].iloc[-1],
+            "raw": raw_path.relative_to(ROOT).as_posix(), "sha256": digest}
 
 
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--start", default="2015-01-01")
     p.add_argument("--end", default="2026-11-17")
+    p.add_argument("--codes", nargs="+", choices=INDICES, default=list(INDICES))
+    p.add_argument("--report", type=Path, default=DATA / "ingest_report_nine.json")
     args = p.parse_args()
     DATA.mkdir(exist_ok=True)
     out = []
     with sqlite3.connect(DB) as conn:
         init(conn)
-        for code in INDICES:
+        for code in dict.fromkeys(args.codes):
             try:
-                result = fetch_one(conn, code, args.start, args.end)
+                df = prepare_daily(fetch_daily(code, args.start, args.end), code, args.start, args.end)
+                result = store_daily(conn, code, args.start, args.end, df)
                 out.append(result)
                 print(json.dumps(result, ensure_ascii=False), flush=True)
             except Exception as exc:
                 out.append({"code": code, "error": repr(exc)})
                 print(json.dumps(out[-1], ensure_ascii=False), flush=True)
-    (DATA / "ingest_report.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    args.report.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if any("error" in row for row in out):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
