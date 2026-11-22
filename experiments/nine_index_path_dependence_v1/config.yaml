@@ -17,3 +17,8 @@ concentrated_c5: 0.05
 lookback: 252
 train: 252
 horizons: [20,60]
+# Figure requested during the experiment: lock the common deletion rule before plotting.
+# Rank dates by top-10 pair incidence, breaking ties chronologically.
+common_delete: 10
+common_sensitivity: [5,20]
+special_indices: ['000688','399006']
