@@ -1,0 +1,19 @@
+start: '2020-07-23'
+end: '2026-11-17'
+codes: ['000001','000985','000300','000903','000132','399311','000905','399006','000688']
+replications: 20000
+batch: 500
+seed: 20261122
+designs: [[circular,5],[circular,10],[circular,20],[circular,60],[stationary,20]]
+# Strict majority must satisfy BOTH descriptive cutoffs. They are conventions.
+fragile_fraction: 0.01
+concentrated_c5: 0.05
+# Primary global statistics: median pair C5, mean top-5 Jaccard.
+# Claim unusual concentration / overlap only if one-sided p <= .05 in all five designs.
+# Pair diagnostics: Holm over 36 per endpoint/design. Robustness: half-samples, leave-one-index-out.
+# Prediction: rolling 252 mature training labels, daily refit, horizons 20/60.
+# Require positive median incremental OOS R2 and at least one positive Holm-significant
+# baseline-vs-expanded DM comparison at EACH horizon.
+lookback: 252
+train: 252
+horizons: [20,60]
