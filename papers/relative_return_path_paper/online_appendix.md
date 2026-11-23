@@ -173,3 +173,10 @@ K从10增至20和50，并集日数由56增至112和259，至少两票日数由37
 | [七指数长样本](../../experiments/seven_index_convergence_v2/results/input_closes_long.csv) | 15dffba8bb56723cf51dcdbc503a10143d9b7f1378988832d86820a2774ef7bf |
 
 图1至图3均为归档PNG的逐字节副本。修订版式可使用对应矢量源，图形重建由各实验原有脚本负责。[图1 SVG](../../experiments/nine_index_path_dependence_v1/figures/nine_paths.svg) · [图2 SVG](../../experiments/seven_index_convergence_v3/figures/rolling_pool.svg) · [图3 SVG](../../experiments/seven_index_convergence_v3/figures/key_day_series.svg)
+
+
+图4按V3滚动重置规则重绘。默认固定归档的最后收盘日，在60、120与252日窗口分别画出原始及A、U、R2、B自然名单下的七条路径。面板的21组距离从图上路径直接计算，再逐一与既有逐窗表核对。运行下列命令可生成PNG和可编辑SVG；加上参数如 `--end 2024-03-29 --out preview` 可检查另一交易日。[绘图代码](figures/build_reset_overlay.py) · [图4 SVG](figures/figure_04.svg)
+
+```shell
+python papers/relative_return_path_paper/figures/build_reset_overlay.py
+```
