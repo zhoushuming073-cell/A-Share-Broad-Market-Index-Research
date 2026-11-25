@@ -277,7 +277,7 @@ V3结果：
 
 定义：
 
-- 日相对收益：(d_t=r_{300,t}-r_{SSE,t})
+- 日相对收益：`d_t = r_{300,t} - r_{SSE,t}`
 - 累计偏移：(D_t=\sum_{s\le t}d_s)
 - W日平均相对收益速度：(v_t(W)=W^{-1}\sum_{s=t-W+1}^{t}d_s)
 
@@ -449,7 +449,7 @@ python experiments/four_pair_tests/verify.py
 python experiments/multidimensional_longshort_search_v1/run_all.py
 
 # 两指数关键日删帧
-python experiments/relative_return_frame_deletion_v1/run_all.py
+python experiments/relative_return_frame_deletion_v1/run.py
 
 # 九指数实验
 python experiments/nine_index_path_dependence_v1/run_all.py
